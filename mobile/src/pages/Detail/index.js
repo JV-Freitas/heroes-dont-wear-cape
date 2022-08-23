@@ -19,8 +19,7 @@ export default function Detail() {
   const route = useRoute();
 
   const incident = route.params.incident;
-  const message =
-    'Olá HelpU!, estou entrando em contato pois gostaria de ajudar no caso "XPTO" com o valor de R$500,00 ';
+  const message = `Olá ${incident.name}!, estou entrando em contato pois gostaria de ajudar no caso ${incident.title}`;
 
   function navigateBack() {
     navigation.goBack();
@@ -29,13 +28,15 @@ export default function Detail() {
   function sendMail() {
     MailComposer.composeAsync({
       subject: 'HEROES don`t wear cape',
-      recipients: ['j0ttave02@gmail.com'],
+      recipients: [`${incident.email}`],
       body: message,
     });
   }
 
   function sendWhatsApp() {
-    Linking.openURL(`whatsapp://send?phone=5511971825523&text=${message}`);
+    Linking.openURL(
+      `whatsapp://send?phone=${incident.whatsapp}&text=${message}`
+    );
   }
   return (
     <View style={styles.container}>
